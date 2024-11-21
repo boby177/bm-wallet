@@ -1,20 +1,15 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
-const port = 3003;
+import express from "express";
+import bodyParser from "body-parser";
+import swaggerUI from "swagger-ui-express";
+import swaggerJSDocs from "swagger-jsdoc";
+import { options } from "./config/swagger.js";
 
-const db = require("./config/database");
+const app = express();
+const port = 3000;
+const specs = swaggerJSDocs(options);
 
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-
-app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
-});
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);

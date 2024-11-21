@@ -8,6 +8,7 @@
     "start": "node src/server",
     "start:dev": "nodemon src/server"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boby177/bm-wallet.git"
@@ -29,6 +30,8 @@
   "dependencies": {
     "express": "^4.21.1",
     "nodemon": "^3.1.7",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
