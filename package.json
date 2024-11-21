@@ -4,7 +4,9 @@
   "description": "bm wallet app payment services",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server",
+    "start:dev": "nodemon src/server"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
   "homepage": "https://github.com/boby177/bm-wallet#readme",
   "dependencies": {
     "express": "^4.21.1",
+    "nodemon": "^3.1.7",
     "pg": "^8.13.1"
   }
 }

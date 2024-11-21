@@ -1,13 +1,13 @@
-module.exports = {
-  HOST: process.env.DB_HOST,
-  USER: process.env.DB_USERNAME,
-  PASSWORD: process.env.DB_PASSWORD,
-  DB: process.env.DB_NAME,
+const Pool = require("pg").Pool;
+
+const pool = new Pool({
+  user: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: +process.env.DB_PORT,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
+});
+
+module.exports = {
+  pool,
 };
