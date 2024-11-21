@@ -1,6 +1,6 @@
 export const options = {
   definition: {
-    openapi: "3.1.0",
+    openapi: "3.0.0",
     info: {
       title: "BM Wallet API",
       version: "1.0.0",
@@ -12,5 +12,5 @@ export const options = {
       },
     ],
   },
-  apis: ["./routes/*.js"],
+  apis: ["./api/routes/*.js"],
 };
