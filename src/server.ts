@@ -1,11 +1,12 @@
 import express from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDocs from "swagger-jsdoc";
-import { options } from "./config/swagger.js";
-import { db } from "./config/database.js";
+import { db } from "./config/database";
+import { options } from "./config/swagger";
+import "dotenv/config";
 
 const app = express();
-const port = 3000;
+const port = process.env.API_PORT;
 
 const connectDb = async () => {
   try {
