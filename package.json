@@ -1,0 +1,31 @@
+{
+  "name": "bm-wallet",
+  "version": "1.0.0",
+  "description": "bm wallet app payment services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boby177/bm-wallet.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "express",
+    "postgres",
+    "postgre",
+    "sql"
+  ],
+  "author": "Boby Maulana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/boby177/bm-wallet/issues"
+  },
+  "homepage": "https://github.com/boby177/bm-wallet#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "pg": "^8.13.1"
+  }
+}
