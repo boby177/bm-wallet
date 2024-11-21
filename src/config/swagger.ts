@@ -1,4 +1,6 @@
-export const options = {
+import "dotenv/config";
+
+export const swaggerConfig = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -8,9 +10,13 @@ export const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:3030",
       },
     ],
   },
-  apis: ["./api/routes/*.js"],
+  apis: [
+    "./src/api/member/routes/member.routes.ts",
+    "./src/api/information/routes/information.routes.ts",
+    "./src/api/transaction/routes/transaction.routes.ts",
+  ],
 };

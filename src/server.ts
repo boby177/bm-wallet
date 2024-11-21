@@ -2,7 +2,7 @@ import express from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDocs from "swagger-jsdoc";
 import { db } from "./config/database";
-import { options } from "./config/swagger";
+import { swaggerConfig } from "./config/swagger";
 import "dotenv/config";
 
 const app = express();
@@ -19,7 +19,7 @@ const connectDb = async () => {
 };
 connectDb();
 
-const specs = swaggerJSDocs(options);
+const specs = swaggerJSDocs(swaggerConfig);
 
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
