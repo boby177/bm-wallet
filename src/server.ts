@@ -1,8 +1,10 @@
 import express from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDocs from "swagger-jsdoc";
-import { db } from "./config/database";
-import { swaggerConfig } from "./config/swagger";
+import { db, swaggerConfig } from "./config";
+import InformationsRoutes from "./api/information/information.routes";
+import { createBanner } from "./api/information/entities/banner.entity";
+import { createService } from "./api/information/entities/service.entity";
 import "dotenv/config";
 
 const app = express();
@@ -18,9 +20,13 @@ const connectDb = async () => {
   }
 };
 connectDb();
+// createBanner();
+// createService();
+
+// List API routes
+app.use(InformationsRoutes);
 
 const specs = swaggerJSDocs(swaggerConfig);
-
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.listen(port, () => {
