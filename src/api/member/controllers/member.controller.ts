@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { getMemberByEmail, registerMember } from "../services/member.service";
+import {
+  getMemberByEmail,
+  registerMember,
+  updateProfile,
+} from "../services/member.service";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import randomstring from "randomstring";
@@ -145,8 +149,42 @@ export async function memberLogin(req: Request, res: Response) {
   res.status(200).json({
     status: 0,
     message: "Login successfully",
-    token: {
+    data: {
       token: accessToken,
+    },
+  });
+}
+
+export async function updateMember(req: Request, res: Response) {
+  const { first_name, last_name } = req.body;
+
+  // Check data token
+  if (req.headers.authorization === undefined) {
+    res.status(401).json({
+      status: 108,
+      message: "Unauthorized",
+    });
+    return;
+  }
+
+  // Verify data token and get data email member
+  const token: any = await verifyToken(req, res);
+  const user = await getMemberByEmail(token.email);
+
+  // Update data user
+  await updateProfile(user.email, first_name, last_name);
+
+  // Get updated data member profile
+  const userUpdated = await getMemberByEmail(token.email);
+
+  res.status(200).json({
+    status: 0,
+    message: "Successfully updated data profile",
+    data: {
+      email: userUpdated.email,
+      first_name: userUpdated.first_name,
+      last_name: userUpdated.last_name,
+      profile_image: userUpdated.profile_image,
     },
   });
 }

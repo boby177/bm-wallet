@@ -35,3 +35,17 @@ export async function registerMember(
 
   return null;
 }
+
+export async function updateProfile(
+  email: string,
+  first_name: string,
+  last_name: string
+) {
+  const member = await db.query(`
+    UPDATE member
+	  SET first_name='${first_name}', last_name='${last_name}'
+    WHERE email = '${email}';
+  `);
+
+  return member.rows[0];
+}
