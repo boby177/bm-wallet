@@ -14,8 +14,17 @@ export async function memberProfile(req: Request, res: Response) {
   try {
     // Check data token and decode data token
     const token: any = await verifyToken(req, res);
-    const decodedToken: any = jwt.decode(token);
 
+    if (!token) {
+      res.status(401).json({
+        status: 108,
+        message: "Unauthorized",
+      });
+      return;
+    }
+
+    // Decode token and get data email member
+    const decodedToken: any = jwt.decode(token);
     const profile = await getMemberByEmail(decodedToken.userEmail);
 
     res.status(200).json({
