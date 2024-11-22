@@ -1,6 +1,7 @@
 import express from "express";
+import { BannerList, ServiceList } from "../controllers/information.controller";
 
-export const InformationsRoutes = express.Router();
+const InformationsRoutes = express.Router();
 
 /**
  * @swagger
@@ -8,8 +9,15 @@ export const InformationsRoutes = express.Router();
  *   get:
  *    summary: Get list banner
  *    tags: [Module Information]
+ *    responses:
+ *       401:
+ *         description: Unauthorized
+ *       200:
+ *         description: Successfully get data banners
+ *       500:
+ *         description: Internal server errors
  */
-InformationsRoutes.get("/banner");
+InformationsRoutes.get("/banner", BannerList);
 
 /**
  * @swagger
