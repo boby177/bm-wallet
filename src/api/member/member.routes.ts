@@ -3,9 +3,11 @@ import {
   memberLogin,
   memberProfile,
   memberRegister,
+  profileImage,
   updateMember,
 } from "./controllers/member.controller";
 import { verifyToken } from "../../common/services/token.service";
+import { upload } from "../../common/services/storage.service";
 
 export const MembersRoutes = express.Router();
 
@@ -255,7 +257,7 @@ MembersRoutes.get("/profile", memberProfile);
  * @swagger
  * /profile/update:
  *   put:
- *     summary: Member Register
+ *     summary: Member Update Profile
  *     tags: [Module Membership]
  *     security:
  *      - bearerAuth: []
@@ -317,5 +319,69 @@ MembersRoutes.get("/profile", memberProfile);
  *                   example: Unauthorized
  */
 MembersRoutes.put("/profile/update", updateMember);
+
+/**
+ * @swagger
+ * /profile/image:
+ *   put:
+ *     summary: Member Update Profile Image
+ *     tags: [Module Membership]
+ *     security:
+ *      - bearerAuth: []
+ *     requestBody:
+ *      required: true
+ *      content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Request Successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 201
+ *                 message:
+ *                   type: string
+ *                   example: Successfully updated data profile
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     email:
+ *                       type: string
+ *                       example: boby.sm378@gmail.com
+ *                     first_name:
+ *                       type: string
+ *                       example: Boby
+ *                     last_name:
+ *                       type: string
+ *                       example: Maulana
+ *                     profile_image:
+ *                       type: string
+ *                       example: https://yoururlapi.com/profile.jpeg
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 108
+ *                 message:
+ *                   type: string
+ *                   example: Unauthorized
+ */
+
+MembersRoutes.put("/profile/image", upload.single("file"), profileImage);
 
 export default MembersRoutes;

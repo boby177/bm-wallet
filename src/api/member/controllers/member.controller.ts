@@ -3,6 +3,7 @@ import {
   getMemberByEmail,
   registerMember,
   updateProfile,
+  updateProfileImage,
 } from "../services/member.service";
 import bcrypt from "bcrypt";
 import validator from "validator";
@@ -173,6 +174,51 @@ export async function updateMember(req: Request, res: Response) {
 
   // Update data user
   await updateProfile(user.email, first_name, last_name);
+
+  // Get updated data member profile
+  const userUpdated = await getMemberByEmail(token.email);
+
+  res.status(200).json({
+    status: 0,
+    message: "Successfully updated data profile",
+    data: {
+      email: userUpdated.email,
+      first_name: userUpdated.first_name,
+      last_name: userUpdated.last_name,
+      profile_image: userUpdated.profile_image,
+    },
+  });
+}
+
+export async function profileImage(req: Request, res: Response) {
+  const file: any = req.file;
+
+  // Check data token
+  if (req.headers.authorization === undefined) {
+    res.status(401).json({
+      status: 108,
+      message: "Unauthorized",
+    });
+    return;
+  }
+
+  const allowedTypes = ["image/jpeg", "image/png"];
+  if (allowedTypes.includes(file.mimetype)) {
+    true;
+  } else {
+    res.status(400).json({
+      status: 102,
+      message: "Invalid file type, only JPEG and PNG images are allowed",
+    });
+    return;
+  }
+
+  // Verify data token and get data email member
+  const token: any = await verifyToken(req, res);
+  const user = await getMemberByEmail(token.email);
+
+  // Update data user
+  await updateProfileImage(user.email, file.path);
 
   // Get updated data member profile
   const userUpdated = await getMemberByEmail(token.email);

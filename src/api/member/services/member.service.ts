@@ -49,3 +49,13 @@ export async function updateProfile(
 
   return member.rows[0];
 }
+
+export async function updateProfileImage(email: string, profile_image: string) {
+  const member = await db.query(`
+    UPDATE member
+	  SET profile_image='${profile_image}'
+    WHERE email = '${email}';
+  `);
+
+  return member.rows[0];
+}
