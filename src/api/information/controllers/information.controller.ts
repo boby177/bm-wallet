@@ -3,7 +3,7 @@ import { getBanners, getServices } from "../services/information.service";
 
 export async function bannerList(req: Request, res: Response) {
   try {
-    const banners = await getBanners(res);
+    const banners = await getBanners();
 
     res.status(200).json({
       status: 200,
@@ -18,7 +18,7 @@ export async function bannerList(req: Request, res: Response) {
 
 export async function serviceList(req: Request, res: Response) {
   try {
-    const services = await getServices(res);
+    const services = await getServices();
 
     res.status(200).json({
       status: 200,
