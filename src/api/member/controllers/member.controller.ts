@@ -12,10 +12,8 @@ import {
 
 export async function memberProfile(req: Request, res: Response) {
   try {
-    // Check data token and decode data token
-    const token: any = await verifyToken(req, res);
-
-    if (!token) {
+    // Check data token
+    if (req.headers.authorization === undefined) {
       res.status(401).json({
         status: 108,
         message: "Unauthorized",
@@ -23,9 +21,9 @@ export async function memberProfile(req: Request, res: Response) {
       return;
     }
 
-    // Decode token and get data email member
-    const decodedToken: any = jwt.decode(token);
-    const profile = await getMemberByEmail(decodedToken.userEmail);
+    // Verify data token and get data email member
+    const token: any = await verifyToken(req, res);
+    const profile = await getMemberByEmail(token.email);
 
     res.status(200).json({
       status: 0,
@@ -136,9 +134,13 @@ export async function memberLogin(req: Request, res: Response) {
   };
 
   // Generate user access token
-  const accessToken = jwt.sign({ payload }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+  const accessToken = jwt.sign(
+    { email: payload.email, memberCode: payload.member_code },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    }
+  );
 
   res.status(200).json({
     status: 0,

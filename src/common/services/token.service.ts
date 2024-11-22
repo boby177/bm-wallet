@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 export interface TokenPayload {
   email: string;
@@ -7,7 +8,9 @@ export interface TokenPayload {
 
 export async function verifyToken(req: Request, res: Response) {
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+  const token: any = authHeader && authHeader.split(" ")[1];
 
-  return token;
+  // Check data token and decode data token
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+  return decoded;
 }

@@ -4,16 +4,17 @@ import { verifyToken } from "../../../common/services/token.service";
 
 export async function bannerList(req: Request, res: Response) {
   try {
-    // Check data token and decode data token
-    const token: any = await verifyToken(req, res);
-
-    if (!token) {
+    // Check data token
+    if (req.headers.authorization === undefined) {
       res.status(401).json({
         status: 108,
         message: "Unauthorized",
       });
       return;
     }
+
+    // Verify data token
+    await verifyToken(req, res);
 
     const banners = await getBanners();
 
@@ -30,16 +31,17 @@ export async function bannerList(req: Request, res: Response) {
 
 export async function serviceList(req: Request, res: Response) {
   try {
-    // Check data token and decode data token
-    const token: any = await verifyToken(req, res);
-
-    if (!token) {
+    // Check data token
+    if (req.headers.authorization === undefined) {
       res.status(401).json({
         status: 108,
         message: "Unauthorized",
       });
       return;
     }
+
+    // Verify data token
+    await verifyToken(req, res);
 
     const services = await getServices();
 
