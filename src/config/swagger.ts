@@ -15,8 +15,8 @@ export const swaggerConfig = {
     ],
   },
   apis: [
-    "./src/api/member/routes/member.routes.ts",
-    "./src/api/information/routes/information.routes.ts",
-    "./src/api/transaction/routes/transaction.routes.ts",
+    "./src/api/member/member.routes.ts",
+    "./src/api/information/information.routes.ts",
+    "./src/api/transaction/transaction.routes.ts",
   ],
 };

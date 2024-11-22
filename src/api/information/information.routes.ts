@@ -1,5 +1,5 @@
 import express from "express";
-import { bannerList, serviceList } from "../controllers/information.controller";
+import { bannerList, serviceList } from "./controllers/information.controller";
 
 const InformationsRoutes = express.Router();
 
@@ -23,7 +23,7 @@ InformationsRoutes.get("/banner", bannerList);
  * @swagger
  * /services:
  *   get:
- *    summary: Get profile member
+ *    summary: Get list services
  *    tags: [Module Information]
  *    responses:
  *       401:
