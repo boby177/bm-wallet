@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getBanners, getServices } from "../services/information.service";
 
-export async function BannerList(req: Request, res: Response) {
+export async function bannerList(req: Request, res: Response) {
   try {
     const banners = await getBanners(res);
 
@@ -16,17 +16,17 @@ export async function BannerList(req: Request, res: Response) {
   }
 }
 
-export const ServiceList = async (res: Response) => {
+export async function serviceList(req: Request, res: Response) {
   try {
-    const banners = await getServices(res);
+    const services = await getServices(res);
 
-    return {
-      status: 0,
+    res.status(200).json({
+      status: 200,
       message: "Successfully get data services",
-      data: banners,
-    };
+      data: services,
+    });
   } catch (error) {
     console.log(error);
     res.json({ msg: error });
   }
-};
+}

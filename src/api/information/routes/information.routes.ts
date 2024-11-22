@@ -1,5 +1,5 @@
 import express from "express";
-import { BannerList, ServiceList } from "../controllers/information.controller";
+import { bannerList, serviceList } from "../controllers/information.controller";
 
 const InformationsRoutes = express.Router();
 
@@ -17,7 +17,7 @@ const InformationsRoutes = express.Router();
  *       500:
  *         description: Internal server errors
  */
-InformationsRoutes.get("/banner", BannerList);
+InformationsRoutes.get("/banner", bannerList);
 
 /**
  * @swagger
@@ -25,7 +25,14 @@ InformationsRoutes.get("/banner", BannerList);
  *   get:
  *    summary: Get profile member
  *    tags: [Module Information]
+ *    responses:
+ *       401:
+ *         description: Unauthorized
+ *       200:
+ *         description: Successfully get data services
+ *       500:
+ *         description: Internal server errors
  */
-InformationsRoutes.get("/services");
+InformationsRoutes.get("/services", serviceList);
 
 export default InformationsRoutes;
