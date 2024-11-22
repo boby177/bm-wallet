@@ -3,25 +3,20 @@ import { getMemberByEmail, registerMember } from "../services/member.service";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import randomstring from "randomstring";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import "dotenv/config";
+import {
+  TokenPayload,
+  verifyToken,
+} from "../../../common/services/token.service";
 
 export async function memberProfile(req: Request, res: Response) {
   try {
-    // TODO: get data email on decoded JWT token
-    const email = "boby.ms378@gmail.com";
-    const profile = await getMemberByEmail(email);
+    // Check data token and decode data token
+    const token: any = await verifyToken(req, res);
+    const decodedToken: any = jwt.decode(token);
 
-    // TODO: create token validation
-
-    // Check data member profile if not exist
-    if (!profile) {
-      res.status(404).json({
-        status: 404,
-        message: `Member profile not found`,
-      });
-      return;
-    }
+    const profile = await getMemberByEmail(decodedToken.userEmail);
 
     res.status(200).json({
       status: 0,
@@ -125,17 +120,16 @@ export async function memberLogin(req: Request, res: Response) {
     return;
   }
 
-  // Generate user access token expires in 12 hours
-  const userEmail = user.email;
-  const memberCode = user.member_code;
+  // Set payload for jwt
+  const payload: TokenPayload = {
+    email: user.email,
+    member_code: user.member_code,
+  };
 
-  const accessToken = jwt.sign(
-    { userEmail, memberCode },
-    process.env.JWT_SECRET!,
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    }
-  );
+  // Generate user access token
+  const accessToken = jwt.sign({ payload }, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 
   res.status(200).json({
     status: 0,

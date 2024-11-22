@@ -4,6 +4,7 @@ import {
   memberProfile,
   memberRegister,
 } from "./controllers/member.controller";
+import { verifyToken } from "../../common/services/token.service";
 
 export const MembersRoutes = express.Router();
 
@@ -13,6 +14,8 @@ export const MembersRoutes = express.Router();
  *   get:
  *    summary: Get profile member
  *    tags: [Module Membership]
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *       401:
  *         description: Unauthorized
@@ -77,8 +80,6 @@ MembersRoutes.get("/profile", memberProfile);
  *   post:
  *     summary: Member Register
  *     tags: [Module Membership]
- *     security:
- *      - bearerAuth: []
  *     requestBody:
  *      required: true
  *      content:
@@ -170,8 +171,6 @@ MembersRoutes.post("/registration", memberRegister);
  *   post:
  *     summary: Member Login
  *     tags: [Module Membership]
- *     security:
- *      - bearerAuth: []
  *     requestBody:
  *      required: true
  *      content:

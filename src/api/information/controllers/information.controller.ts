@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { getBanners, getServices } from "../services/information.service";
+import { verifyToken } from "../../../common/services/token.service";
 
 export async function bannerList(req: Request, res: Response) {
   try {
+    // Check data token
+    await verifyToken(req, res);
     const banners = await getBanners();
 
     res.status(200).json({
@@ -18,6 +21,8 @@ export async function bannerList(req: Request, res: Response) {
 
 export async function serviceList(req: Request, res: Response) {
   try {
+    // Check data token
+    await verifyToken(req, res);
     const services = await getServices();
 
     res.status(200).json({

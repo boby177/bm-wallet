@@ -9,6 +9,8 @@ const InformationsRoutes = express.Router();
  *   get:
  *    summary: Get list banner
  *    tags: [Module Information]
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *       401:
  *         description: Unauthorized
@@ -25,6 +27,8 @@ InformationsRoutes.get("/banner", bannerList);
  *   get:
  *    summary: Get list services
  *    tags: [Module Information]
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *       401:
  *         description: Unauthorized
