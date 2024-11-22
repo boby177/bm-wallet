@@ -19,3 +19,18 @@ export async function getMemberByEmail(email: string): Promise<Member> {
 
   return banners.rows[0];
 }
+
+export async function registerMember(
+  email: string,
+  first_name: string,
+  last_name: string,
+  password: string
+) {
+  await db.query(`
+      INSERT INTO member(
+	    email, first_name, last_name, password)
+	    VALUES ('${email}', '${first_name}', '${last_name}', '${password}');
+  `);
+
+  return null;
+}

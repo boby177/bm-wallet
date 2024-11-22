@@ -8,10 +8,14 @@ import TransactionsRoutes from "./api/transaction/transaction.routes";
 import { createBanner } from "./api/information/entities/banner.entity";
 import { createService } from "./api/information/entities/service.entity";
 import { createMember } from "./api/member/entities/member.entity";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 
 const app = express();
 const port = process.env.API_PORT;
+
+app.use(cookieParser());
+app.use(express.json());
 
 const connectDb = async () => {
   try {
