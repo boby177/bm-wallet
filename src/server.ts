@@ -1,6 +1,8 @@
+import "dotenv/config";
 import express from "express";
-import swaggerUI from "swagger-ui-express";
+import cookieParser from "cookie-parser";
 import swaggerJSDocs from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
 import { db, swaggerConfig } from "./config";
 import MembersRoutes from "./api/member/member.routes";
 import InformationsRoutes from "./api/information/information.routes";
@@ -8,8 +10,8 @@ import TransactionsRoutes from "./api/transaction/transaction.routes";
 import { createBanner } from "./api/information/entities/banner.entity";
 import { createService } from "./api/information/entities/service.entity";
 import { createMember } from "./api/member/entities/member.entity";
-import cookieParser from "cookie-parser";
-import "dotenv/config";
+import { createTransaction } from "./api/transaction/entities/transaction.entity";
+import { createBalance } from "./api/transaction/entities/balance.entity";
 
 const app = express();
 const port = process.env.API_PORT;
@@ -25,6 +27,8 @@ const connectDb = async () => {
     // createBanner();
     // createService();
     // createMember();
+    // createBalance();
+    // createTransaction();
 
     console.log("Database Connected Successfully");
   } catch (error) {

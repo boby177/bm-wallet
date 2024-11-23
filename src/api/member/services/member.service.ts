@@ -12,7 +12,7 @@ export async function getMembers(): Promise<Member[]> {
 
 export async function getMemberByEmail(email: string): Promise<Member> {
   const banners = await db.query(`
-    SELECT email, member_code, first_name, last_name, profile_image, password
+    SELECT id, email, member_code, first_name, last_name, profile_image, password
 	  FROM member
     WHERE email = '${email}';
 `);
@@ -27,13 +27,13 @@ export async function registerMember(
   last_name: string,
   password: string
 ) {
-  await db.query(`
+  const member = await db.query(`
       INSERT INTO member(
 	    email, member_code, first_name, last_name, password)
 	    VALUES ('${email}', '${member_code}', '${first_name}', '${last_name}', '${password}');
   `);
 
-  return null;
+  return member;
 }
 
 export async function updateProfile(

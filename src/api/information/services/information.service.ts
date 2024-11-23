@@ -19,3 +19,13 @@ export async function getServices(): Promise<Service[]> {
 
   return services.rows;
 }
+
+export async function getServiceByCode(service_code: string): Promise<Service> {
+  const services = await db.query(`
+    SELECT service_code, service_name, service_icon, service_tarif
+    FROM services
+    WHERE service_code = '${service_code}';
+`);
+
+  return services.rows[0];
+}
