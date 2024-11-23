@@ -22,3 +22,9 @@ $ yarn start:dev
 
 Open Web browser: http://localhost:3030/api-docs
 ```
+
+## API Production
+
+```bash
+https://bm-wallet-production.up.railway.app/api/docs
+```
