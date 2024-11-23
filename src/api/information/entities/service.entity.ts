@@ -16,7 +16,7 @@ export const createService = async () => {
     await db.query(`
         CREATE TABLE services (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        service_code VARCHAR(50) NOT NULL,
+        service_code VARCHAR(50) NOT NULL UNIQUE,
         service_name VARCHAR(255) NOT NULL,
         service_icon TEXT,
         service_tarif INTEGER,

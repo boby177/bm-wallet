@@ -3,7 +3,12 @@ import { db } from "../../../config";
 export interface Transaction {
   id: string;
   user_id: string;
-  balance: number;
+  transaction_type: string;
+  invoice_number: string;
+  total_amount: number;
+  service_code: string;
+  service_name: string;
+  description: string;
   created_at: Date;
 }
 
