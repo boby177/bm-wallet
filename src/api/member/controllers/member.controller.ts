@@ -14,6 +14,7 @@ import {
   TokenPayload,
   verifyToken,
 } from "../../../common/services/token.service";
+import { createMemberBalance } from "../../transaction/services/transaction.service";
 
 export async function memberProfile(req: Request, res: Response) {
   try {
@@ -90,6 +91,10 @@ export async function memberRegister(req: Request, res: Response) {
 
   // Register data new member
   await registerMember(email, memberCode, first_name, last_name, hashPassword);
+
+  // Get data member and create account balance for member
+  const newMember = await getMemberByEmail(email);
+  await createMemberBalance(newMember.id);
 
   res.status(201).json({
     status: 0,
