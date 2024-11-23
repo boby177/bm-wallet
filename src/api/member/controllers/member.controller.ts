@@ -70,7 +70,7 @@ export async function memberRegister(req: Request, res: Response) {
   }
 
   // Check data user password
-  if (password.length >= 8) {
+  if (password.length <= 8) {
     res.status(400).json({
       status: 102,
       message: "Password length must be at least 8 characters",
