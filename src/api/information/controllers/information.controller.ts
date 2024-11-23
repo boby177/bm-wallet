@@ -1,9 +1,22 @@
 import { Request, Response } from "express";
 import { getBanners, getServices } from "../services/information.service";
+import { verifyToken } from "../../../common/services/token.service";
 
 export async function bannerList(req: Request, res: Response) {
   try {
-    const banners = await getBanners(res);
+    // Check data token
+    if (req.headers.authorization === undefined) {
+      res.status(401).json({
+        status: 108,
+        message: "Unauthorized",
+      });
+      return;
+    }
+
+    // Verify data token
+    await verifyToken(req, res);
+
+    const banners = await getBanners();
 
     res.status(200).json({
       status: 200,
@@ -18,7 +31,19 @@ export async function bannerList(req: Request, res: Response) {
 
 export async function serviceList(req: Request, res: Response) {
   try {
-    const services = await getServices(res);
+    // Check data token
+    if (req.headers.authorization === undefined) {
+      res.status(401).json({
+        status: 108,
+        message: "Unauthorized",
+      });
+      return;
+    }
+
+    // Verify data token
+    await verifyToken(req, res);
+
+    const services = await getServices();
 
     res.status(200).json({
       status: 200,

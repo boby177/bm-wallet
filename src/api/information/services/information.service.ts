@@ -1,9 +1,8 @@
 import { db } from "../../../config";
-import { Response } from "express";
 import { Banner } from "../entities/banner.entity";
 import { Service } from "../entities/service.entity";
 
-export async function getBanners(res: Response): Promise<Banner[]> {
+export async function getBanners(): Promise<Banner[]> {
   const banners = await db.query(`
     SELECT banner_name, banner_image, description 
     FROM banner;
@@ -12,7 +11,7 @@ export async function getBanners(res: Response): Promise<Banner[]> {
   return banners.rows;
 }
 
-export async function getServices(res: Response): Promise<Service[]> {
+export async function getServices(): Promise<Service[]> {
   const services = await db.query(`
     SELECT service_code, service_name, service_icon, service_tarif
     FROM services;
