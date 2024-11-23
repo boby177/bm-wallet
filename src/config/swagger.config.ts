@@ -10,7 +10,7 @@ export const swaggerConfig = {
     },
     servers: [
       {
-        url: "http://localhost:3030",
+        url: process.env.SWAGGER_SERVER,
       },
     ],
     components: {
