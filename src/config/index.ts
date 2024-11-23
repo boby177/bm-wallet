@@ -1,4 +1,4 @@
-import { db } from "./database";
-import { swaggerConfig } from "./swagger";
+import { db } from "./database.config";
+import { swaggerConfig } from "./swagger.config";
 
 export { db, swaggerConfig };

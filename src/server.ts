@@ -4,14 +4,10 @@ import cookieParser from "cookie-parser";
 import swaggerJSDocs from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
 import { db, swaggerConfig } from "./config";
+import { createTable } from "./config/table.config";
 import MembersRoutes from "./api/member/member.routes";
 import InformationsRoutes from "./api/information/information.routes";
 import TransactionsRoutes from "./api/transaction/transaction.routes";
-import { createBanner } from "./api/information/entities/banner.entity";
-import { createService } from "./api/information/entities/service.entity";
-import { createMember } from "./api/member/entities/member.entity";
-import { createTransaction } from "./api/transaction/entities/transaction.entity";
-import { createBalance } from "./api/transaction/entities/balance.entity";
 
 const app = express();
 const port = process.env.API_PORT;
@@ -22,15 +18,10 @@ app.use(express.json());
 const connectDb = async () => {
   try {
     await db.connect();
-
-    // Create table list
-    // createBanner();
-    // createService();
-    // createMember();
-    // createBalance();
-    // createTransaction();
-
     console.log("Database Connected Successfully");
+
+    // Check if data table is not exist
+    createTable();
   } catch (error) {
     console.log(error);
   }
