@@ -1,6 +1,7 @@
 import express from "express";
 import {
   checkMemberBalance,
+  memberHistoryTransactions,
   topupBalanceMember,
   transactionServiceMember,
 } from "./controllers/transaction.controller";
@@ -45,7 +46,7 @@ export const TransactionsRoutes = express.Router();
  *                 data:
  *                   type: object
  *                   properties:
- *                     email:
+ *                     balance:
  *                       type: integer
  *                       example: 1000000
  */
@@ -71,7 +72,7 @@ TransactionsRoutes.get("/balance", checkMemberBalance);
  *           example:
  *             top_up_amount: 1000000
  *     responses:
-*       401:
+ *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
@@ -223,5 +224,86 @@ TransactionsRoutes.post("/topup", topupBalanceMember);
  *                       example: 2023-08-17T10:10:10.000Z
  */
 TransactionsRoutes.post("/transaction", transactionServiceMember);
+
+/**
+ * @swagger
+ * /transaction/history:
+ *   get:
+ *    summary: Get member history transactions
+ *    tags: [Module Transaction]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: query
+ *        name: offset
+ *        schema:
+ *          type: integer
+ *          minimum: 1
+ *        description: Page number
+ *      - in: query
+ *        name: limit
+ *        schema:
+ *          type: integer
+ *          minimum: 1
+ *          maximum: 9999
+ *        description: Page size
+ *    responses:
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 108
+ *                 message:
+ *                   type: string
+ *                   example: Unauthorized
+ *       200:
+ *         description: Successfully get data member profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 0
+ *                 message:
+ *                   type: string
+ *                   example: Successfully get data member balance
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     offset:
+ *                       type: integer
+ *                       example: 0
+ *                     limit:
+ *                       type: integer
+ *                       example: 1
+ *                     records:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           invoice_number:
+ *                             type: string
+ *                             example: INV17082023-001
+ *                           transaction_type:
+ *                             type: string
+ *                             example: TOPUP
+ *                           description:
+ *                             type: string
+ *                             example: Top up balance
+ *                           total_amount:
+ *                             type: integer
+ *                             example: 100000
+ *                           created_on:
+ *                             type: string
+ *                             example: 2023-08-17T10:10:10.000Z
+ */
+TransactionsRoutes.get("/transaction/history", memberHistoryTransactions);
 
 export default TransactionsRoutes;

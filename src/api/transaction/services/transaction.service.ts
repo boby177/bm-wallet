@@ -73,9 +73,26 @@ export async function getMemberTransactions(
   user_id: string
 ): Promise<Transaction[]> {
   const memberBalance = await db.query(`
-      SELECT id, user_id, transaction_type, invoice_number, total_amount, service_code, service_name, description, created_at
+      SELECT *
       FROM transaction
       WHERE user_id = '${user_id}';
+  `);
+
+  return memberBalance.rows;
+}
+
+export async function memberTransactionPaginate(
+  user_id: string,
+  limit: number,
+  offset: number
+): Promise<Transaction[]> {
+  const memberBalance = await db.query(`
+      SELECT *
+      FROM transaction
+      WHERE user_id = '${user_id}'
+      ORDER BY created_at DESC
+      LIMIT ${limit}
+      OFFSET ${offset}
   `);
 
   return memberBalance.rows;

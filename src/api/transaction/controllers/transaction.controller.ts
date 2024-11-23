@@ -5,6 +5,7 @@ import { getMemberByEmail } from "../../member/services/member.service";
 import {
   getMemberTransactions,
   memberBalance,
+  memberTransactionPaginate,
   topupBalance,
   transactionService,
   updateMemberBalance,
@@ -170,6 +171,50 @@ export async function transactionServiceMember(req: Request, res: Response) {
         transaction_type: newestTransaction.transaction_type,
         total_amount: newestTransaction.total_amount,
         created_on: newestTransaction.created_at,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: error });
+  }
+}
+
+export async function memberHistoryTransactions(req: Request, res: Response) {
+  try {
+    const page: any = req.query.offset || 1;
+    const size: any = req.query.limit || 9999;
+
+    // Check data token
+    if (req.headers.authorization === undefined) {
+      res.status(401).json({
+        status: 108,
+        message: "Unauthorized",
+      });
+      return;
+    }
+
+    // Verify data token and get data email member
+    const token: any = await verifyToken(req, res);
+    const profile = await getMemberByEmail(token.email);
+
+    // Set data limit and offset
+    const limit = size;
+    const offset = (page - 1) * limit;
+
+    // Get newest data transaction member
+    const memberTransactions = await memberTransactionPaginate(
+      profile.id,
+      limit,
+      offset
+    );
+
+    res.status(200).json({
+      status: 0,
+      message: "Successfully get data member history transactions",
+      data: {
+        offset: page,
+        limit: limit,
+        records: memberTransactions,
       },
     });
   } catch (error) {
