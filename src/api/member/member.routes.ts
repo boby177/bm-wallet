@@ -86,19 +86,6 @@ export const MembersRoutes = express.Router();
  *                 data:
  *                   type: null
  *                   example: null
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   example: 500
- *                 message:
- *                   type: string
- *                   example: Internal Server Error
  */
 MembersRoutes.post("/registration", memberRegister);
 
@@ -135,12 +122,12 @@ MembersRoutes.post("/registration", memberRegister);
  *                   example: 102
  *                 message:
  *                   type: string
- *                   example: Password length must be at least 8 characters
+ *                   example: Email address is invalid. Please enter a correct email format
  *                 data:
  *                   type: null
  *                   example: null
- *       422:
- *         description: Unprocessable Entity
+ *       401:
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
@@ -151,12 +138,12 @@ MembersRoutes.post("/registration", memberRegister);
  *                   example: 102
  *                 message:
  *                   type: string
- *                   example: Email already exist, please use different email
+ *                   example: Incorrect email or password member, please try again
  *                 data:
  *                   type: null
  *                   example: null
- *       201:
- *         description: Request Successfully
+ *       200:
+ *         description: Login Successfully
  *         content:
  *           application/json:
  *             schema:
@@ -164,26 +151,16 @@ MembersRoutes.post("/registration", memberRegister);
  *               properties:
  *                 status:
  *                   type: integer
- *                   example: 201
+ *                   example: 0
  *                 message:
  *                   type: string
  *                   example: Successfully created new data member
  *                 data:
- *                   type: null
- *                   example: null
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   example: 500
- *                 message:
- *                   type: string
- *                   example: Internal Server Error
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNTRVdXRjYTdCS0ZPX0ZUZGZ1bXlJem9zSTRKa1VxUGZVZ0ROSTUwelRTQlo2aHoyY0hKZ1VMb1loM09HUUd0ekQxV3dTX194aHBNZTE2SGFscVRzcEhjS21UclJ3S2FYYmZob3AzdzFFUHJ2NFdBQmk1c0RpdV9DSnZTSWt2MDFTbEU0QU5pbVB0bUx5azZoUzlOalVQNEZaVVpfRVBtcEk4Y3pNc3ZWa2JFPSIsImlhdCI6MTYyNjkyODk3MSwiZXhwIjoyNTU2MTE4Nzk4fQ.9C9NvhZYKivhGWnrjo4Wr1Rv-wur1wCm0jqfK9XDD8
  */
 MembersRoutes.post("/login", memberLogin);
 
@@ -237,19 +214,6 @@ MembersRoutes.post("/login", memberLogin);
  *                     profile_image:
  *                       type: string
  *                       example: https://yoururlapi.com/profile.jpeg
- *       500:
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   example: 500
- *                 message:
- *                   type: string
- *                   example: Internal Server Error
  */
 MembersRoutes.get("/profile", memberProfile);
 

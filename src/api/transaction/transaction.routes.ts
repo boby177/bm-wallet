@@ -31,7 +31,7 @@ export const TransactionsRoutes = express.Router();
  *                   type: string
  *                   example: Unauthorized
  *       200:
- *         description: Successfully get data member profile
+ *         description: Request Successfully
  *         content:
  *           application/json:
  *             schema:
@@ -262,7 +262,7 @@ TransactionsRoutes.post("/transaction", transactionServiceMember);
  *                   type: string
  *                   example: Unauthorized
  *       200:
- *         description: Successfully get data member profile
+ *         description: Request Successfully
  *         content:
  *           application/json:
  *             schema:

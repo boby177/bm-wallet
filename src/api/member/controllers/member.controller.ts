@@ -119,7 +119,7 @@ export async function memberLogin(req: Request, res: Response) {
   const user = await getMemberByEmail(email);
 
   if (user === undefined) {
-    res.status(422).json({
+    res.status(401).json({
       status: 102,
       message: "Incorrect email or password member, please try again",
     });
@@ -130,7 +130,7 @@ export async function memberLogin(req: Request, res: Response) {
   const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (!passwordMatch) {
-    res.status(400).json({
+    res.status(401).json({
       status: 102,
       message: "Incorrect email or password member, please try again",
     });
